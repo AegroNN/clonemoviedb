@@ -9,6 +9,7 @@
                 </div>
             </div>
         </div>
+        <button @click="changePage">Daha fazla yükle</button>
     </div>
 </template>
 
@@ -19,11 +20,12 @@ export default {
     name:"movieList",
     data(){
         return{
-        movieList:[]
+        movieList:[],
+        pageNumber:1,
         }
     },
     created(){
-        api.get("/movie/popular?api_key=196ce0b01013c413b6103f24b696e9c3&language=en-US&page="+"1")
+        api.get("/movie/popular?api_key=196ce0b01013c413b6103f24b696e9c3&language=en-US&page="+this.pageNumber)
         .then(response=>{
             console.log(response)
             let result = response.data.results
@@ -32,12 +34,23 @@ export default {
             }
         })
         .catch(e=>console.log(e))
+    },
+    methods:{
+        changePage:function(){
+            this.pageNumber++
+            api.get("/movie/popular?api_key=196ce0b01013c413b6103f24b696e9c3&language=en-US&page="+this.pageNumber)
+                .then(response=>{
+                console.log(response)
+                let result = response.data.results
+                for(let key in result){
+                this.movieList.push({...result[key],id:key})
+                }})
+                .catch(e=>console.log(e))
+            return this.pageNumber
+        },
     }
 }
 </script>
 
 <style  scoped>
-.list{
-    
-}
 </style>
