@@ -1,15 +1,35 @@
 <template>
-    <div class="list">
+    <div class="d-flex flex-column justify-center align-center">
         <div class="items" v-for="movie in movieList" v-bind:key="movie.id">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">{{movie.title}}</h4>
-                    <p class="card-text">{{movie.overview}}</p>
-                    <p class="card-text">{{movie.vote_average}}</p>
-                </div>
-            </div>
+            <v-card class="mx-auto my-12" max-width="500">
+                <v-img :src="'https://image.tmdb.org/t/p/w440_and_h660_face'+movie.poster_path"
+                
+                ></v-img>
+                <v-card-title>{{movie.title}}</v-card-title>
+                <v-card-text>
+                    <div class="vote">
+                        <v-rating
+                        :value="movie.vote_average"
+                        length="10"
+                        readonly
+                        hover
+                        dense
+                        half-increments
+                        size="14"
+                        ></v-rating>
+                        <div class="grey--text ms-4">
+                        {{movie.vote_average}}({{movie.vote_count}})
+                        </div>
+                        </div>
+                    <v-divider class="mx-4"></v-divider>
+                    <div>{{movie.overview}}</div>
+                </v-card-text>
+            </v-card>
         </div>
-        <button @click="changePage">Daha fazla yükle</button>
+        <v-btn class="btn"
+        @click="changePage"
+        width="500"
+        >Daha fazla yükle</v-btn>
     </div>
 </template>
 
@@ -52,5 +72,13 @@ export default {
 }
 </script>
 
-<style  scoped>
+<style  scoped> 
+.items{
+    padding: 5px;
+}
+.vote{
+    display: flex;
+    flex-direction: row;
+}
+
 </style>
