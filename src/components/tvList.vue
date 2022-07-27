@@ -1,18 +1,19 @@
 <template>
     <div class="d-flex flex-column justify-center align-center">
         <navbar></navbar>
+        <h1>{{listType}} Series</h1>
     <v-container>
     <v-row justify="space-around" >
-        <v-col v-for="movie in movieList" :key="movie.id" class="sm-4 d-flex justify-center">
+        <v-col v-for="tv in tvList" :key="tv.id" class="sm-4 d-flex justify-center">
             <v-card elevation="2" outlined max-width="315" max-height="700">
-                <v-img :src="'https://image.tmdb.org/t/p/w440_and_h660_face'+ movie.poster_path"
+                <v-img :src="'https://image.tmdb.org/t/p/w440_and_h660_face'+ tv.poster_path"
                 max-height="500"
                 ></v-img>
-                <v-card-title >{{movie.title}}</v-card-title>
+                <v-card-title >{{tv.name}}</v-card-title>
                 <v-card-text>
                     <div class="d-flex flex-row justify-space-between">
                         <v-rating
-                        :value="movie.vote_average"
+                        :value="tv.vote_average"
                         length="10"
                         readonly
                         hover
@@ -21,11 +22,11 @@
                         size="14"
                         ></v-rating>
                         <div class="grey--text ms-4">
-                        {{movie.vote_average}}({{movie.vote_count}})
+                        {{tv.vote_average}}({{tv.vote_count}})
                         </div>
                     </div>
                     <v-divider class="mx-4"></v-divider>
-                    <div>{{movie.release_date}}</div>
+                    <div>{{tv.release_date}}</div>
                 </v-card-text>
             </v-card>
         </v-col>
@@ -45,13 +46,13 @@ import listGetter from "@/services/lists.js"
 import navbar from "./movieNavbar.vue"
 
 export default {
-    name:"movieList",
+    name:"tvList",
     components:{
         navbar
     },
     data(){
         return{
-        movieList:[],
+        tvList:[],
         pageNumber:1,
         show:false,
         type:this.$route.params.type,
@@ -66,7 +67,7 @@ export default {
             console.log(response)
             let result = response.data.results
             for(let key in result){
-                this.movieList.push({...result[key],id:key})
+                this.tvList.push({...result[key],id:key})
             }
         }).catch(e=>console.log(e))
     },
@@ -85,19 +86,19 @@ export default {
             console.log(response)
             let result = response.data.results
             for(let key in result){
-                this.movieList.push({...result[key],id:key})
+                this.tvList.push({...result[key],id:key})
             }
         }).catch(e=>console.log(e))
         return this.pageNumber
         },
         refreshPage(){
-            this.movieList=[]
+            this.tvList=[]
             listGetter.getList(this.type,this.listType,this.pageNumber)
             .then(response=>{
             console.log(response)
             let result = response.data.results
             for(let key in result){
-                this.movieList.push({...result[key],id:key})
+                this.tvList.push({...result[key],id:key})
             }
             }).catch(e=>console.log(e))
         }     

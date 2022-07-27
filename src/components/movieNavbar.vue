@@ -7,40 +7,100 @@
       shaped
 
     >
+    <router-link
+        to="/"
+    >
+      <v-toolbar-title class="white--text">Clone Movie DB</v-toolbar-title>
+    </router-link>
         <v-menu
         open-on-hover
         bottom
         offset-y
         >
             <template v-slot:activator="{on, attrs}">
-                    <v-app-bar-nav-icon
+                    <v-btn
+                    disable
                     v-bind="attrs"
                     v-on="on"
-                    class="white--text"
-                    ></v-app-bar-nav-icon>
+                    class="white--text ma-2"
+                    outlined
+                    >Movies</v-btn>
             </template>
             <v-list>
                 <router-link
-                :to="{name:'popular', params:{popular}}"
+                :to="{name:'movieList', params:{type:'movie',listType:'popular'}}"
                 >
                     <v-list-item link>
                         <v-list-item-title >Popular Movies</v-list-item-title>
                     </v-list-item>
                 </router-link>
                 <router-link
-                :to="{name:'onGoing', params:{'now_playing':string}}"
+                :to="{name:'movieList', params:{type:'movie',listType:'now_playing'}}"
                 >
                     <v-list-item link>
                         <v-list-item-title >On Going Movies</v-list-item-title>
                     </v-list-item>
                 </router-link>
+                <router-link
+                :to="{name:'movieList', params:{type:'movie',listType:'upcoming'}}"
+                >
+                    <v-list-item link>
+                        <v-list-item-title >Coming Soon Movies</v-list-item-title>
+                    </v-list-item>
+                </router-link>
+                <router-link
+                :to="{name:'movieList', params:{type:'movie',listType:'top_rated'}}"
+                >
+                    <v-list-item link>
+                        <v-list-item-title >Best Movies</v-list-item-title>
+                    </v-list-item>
+                </router-link>
             </v-list>
         </v-menu>
-    <router-link
-        to="/"
-    >
-      <v-toolbar-title class="white--text">Clone Movie DB</v-toolbar-title>
-    </router-link>
+                <v-menu
+        open-on-hover
+        bottom
+        offset-y
+        >
+            <template v-slot:activator="{on, attrs}">
+                    <v-btn
+                    v-bind="attrs"
+                    v-on="on"
+                    class="white--text ma-2"
+                    outlined
+                    >Series</v-btn>
+            </template>
+            <v-list>
+                <router-link
+                :to="{name:'tvList', params:{type:'tv',listType:'popular'}}"
+                >
+                    <v-list-item link>
+                        <v-list-item-title >Popular Series</v-list-item-title>
+                    </v-list-item>
+                </router-link>
+                <router-link
+                :to="{name:'tvList', params:{type:'tv',listType:'on_the_air'}}"
+                >
+                    <v-list-item link>
+                        <v-list-item-title >Airing Today Series</v-list-item-title>
+                    </v-list-item>
+                </router-link>
+                <router-link
+                :to="{name:'tvList', params:{type:'tv',listType:'airing_today'}}"
+                >
+                    <v-list-item link>
+                        <v-list-item-title >Coming Soon Series</v-list-item-title>
+                    </v-list-item>
+                </router-link>
+                <router-link
+                :to="{name:'tvList', params:{type:'tv',listType:'top_rated'}}"
+                >
+                    <v-list-item link>
+                        <v-list-item-title >Best Series</v-list-item-title>
+                    </v-list-item>
+                </router-link>
+            </v-list>
+        </v-menu>
       <v-spacer></v-spacer>
 
       <v-btn icon>
@@ -60,12 +120,6 @@
 
 <script>
 export default {
-    data(){
-        return{
-        popular:"popular",
-        onGoing:"now_playing"
-        }
-    }
 }
 </script>
 
