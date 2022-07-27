@@ -102,8 +102,17 @@
             </v-list>
         </v-menu>
       <v-spacer></v-spacer>
-
-      <v-btn icon>
+      
+      <v-text-field 
+      v-show="searchShow"
+      rounded
+      solo
+      dense
+      >
+      </v-text-field>
+      <v-btn icon
+      @click="searchShow=!searchShow"
+      >
         <v-icon class="white--text">mdi-magnify</v-icon>
       </v-btn>
 
@@ -120,11 +129,20 @@
 
 <script>
 export default {
+    data(){
+        return{
+            searchShow:false,
+        }
+    }
 }
 </script>
 
 <style scoped>
 a{
     text-decoration: none;
+} 
+
+::v-deep .v-text-field.v-text-field--enclosed .v-text-field__details{
+    display: none;
 }
 </style>

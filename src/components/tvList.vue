@@ -2,16 +2,26 @@
     <div class="d-flex flex-column justify-center align-center">
         <navbar></navbar>
         <h1>{{listType}} Series</h1>
+        <v-container class="justify-space-between">
+        <v-row> 
+            <v-col
+            cols="3"
+            >
+            <filtrePart></filtrePart>
+            </v-col>
+            <v-col
+            cols="9"
+            >
     <v-container>
     <v-row justify="space-around" >
-        <v-col v-for="tv in tvList" :key="tv.id" class="sm-4 d-flex justify-center">
-            <v-card elevation="2" outlined max-width="315" max-height="700">
+        <v-col v-for="tv in tvList" :key="tv.id" class="md-3 sm-4 d-flex justify-center">
+            <v-card elevation="2" outlined max-width="200" max-height="500">
                 <v-img :src="'https://image.tmdb.org/t/p/w440_and_h660_face'+ tv.poster_path"
-                max-height="500"
+                max-height="300"
                 ></v-img>
-                <v-card-title >{{tv.name}}</v-card-title>
+                <v-card-title >{{tv.name}}{{tv.title}}</v-card-title>
                 <v-card-text>
-                    <div class="d-flex flex-row justify-space-between">
+                    <div class="d-flex flex-column">
                         <v-rating
                         :value="tv.vote_average"
                         length="10"
@@ -32,6 +42,9 @@
         </v-col>
         </v-row>
     </v-container>
+    </v-col>
+    </v-row>
+    </v-container>
         <v-btn class="btn"
         @click="changePage"
         width="500"
@@ -44,12 +57,14 @@
 /* eslint-disable */
 import listGetter from "@/services/lists.js"
 import navbar from "./movieNavbar.vue"
+import filtrePart from "./filtrePart.vue"
 
 export default {
     name:"tvList",
     components:{
-        navbar
-    },
+    navbar,
+    filtrePart,
+},
     data(){
         return{
         tvList:[],
@@ -60,8 +75,6 @@ export default {
         }
     },
     created(){
-        console.log(this.type)
-        console.log(this.listType)
         listGetter.getList(this.type,this.listType,this.pageNumber)
         .then(response=>{
             console.log(response)
@@ -109,5 +122,8 @@ export default {
 <style  scoped>
 ::v-deep .v-card_title{
     word-break:break-word !important;
+}
+::v-deep .container{
+    max-width: 100% !important;
 }
 </style>

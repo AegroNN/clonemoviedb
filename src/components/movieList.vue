@@ -8,7 +8,7 @@
                 <v-img :src="'https://image.tmdb.org/t/p/w440_and_h660_face'+ movie.poster_path"
                 max-height="500"
                 ></v-img>
-                <v-card-title >{{movie.title}}</v-card-title>
+                <v-card-title>{{movie.title}}</v-card-title>
                 <v-card-text>
                     <div class="d-flex flex-row justify-space-between">
                         <v-rating
