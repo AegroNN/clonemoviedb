@@ -28,28 +28,28 @@
             </template>
             <v-list>
                 <router-link
-                :to="{name:'movieList', params:{type:'movie',listType:'popular'}}"
+                :to="{name:'List', params:{type:'movie',listType:'popular'}}"
                 >
                     <v-list-item link>
                         <v-list-item-title >Popular Movies</v-list-item-title>
                     </v-list-item>
                 </router-link>
                 <router-link
-                :to="{name:'movieList', params:{type:'movie',listType:'now_playing'}}"
+                :to="{name:'List', params:{type:'movie',listType:'now_playing'}}"
                 >
                     <v-list-item link>
                         <v-list-item-title >On Going Movies</v-list-item-title>
                     </v-list-item>
                 </router-link>
                 <router-link
-                :to="{name:'movieList', params:{type:'movie',listType:'upcoming'}}"
+                :to="{name:'List', params:{type:'movie',listType:'upcoming'}}"
                 >
                     <v-list-item link>
                         <v-list-item-title >Coming Soon Movies</v-list-item-title>
                     </v-list-item>
                 </router-link>
                 <router-link
-                :to="{name:'movieList', params:{type:'movie',listType:'top_rated'}}"
+                :to="{name:'List', params:{type:'movie',listType:'top_rated'}}"
                 >
                     <v-list-item link>
                         <v-list-item-title >Best Movies</v-list-item-title>
@@ -72,28 +72,28 @@
             </template>
             <v-list>
                 <router-link
-                :to="{name:'tvList', params:{type:'tv',listType:'popular'}}"
+                :to="{name:'List', params:{type:'tv',listType:'popular'}}"
                 >
                     <v-list-item link>
                         <v-list-item-title >Popular Series</v-list-item-title>
                     </v-list-item>
                 </router-link>
                 <router-link
-                :to="{name:'tvList', params:{type:'tv',listType:'on_the_air'}}"
+                :to="{name:'List', params:{type:'tv',listType:'on_the_air'}}"
                 >
                     <v-list-item link>
                         <v-list-item-title >Airing Today Series</v-list-item-title>
                     </v-list-item>
                 </router-link>
                 <router-link
-                :to="{name:'tvList', params:{type:'tv',listType:'airing_today'}}"
+                :to="{name:'List', params:{type:'tv',listType:'airing_today'}}"
                 >
                     <v-list-item link>
                         <v-list-item-title >Coming Soon Series</v-list-item-title>
                     </v-list-item>
                 </router-link>
                 <router-link
-                :to="{name:'tvList', params:{type:'tv',listType:'top_rated'}}"
+                :to="{name:'List', params:{type:'tv',listType:'top_rated'}}"
                 >
                     <v-list-item link>
                         <v-list-item-title >Best Series</v-list-item-title>
@@ -105,9 +105,14 @@
       
       <v-text-field 
       v-show="searchShow"
+      v-model="queryString"
       rounded
       solo
       dense
+      placeholder="Ara..."
+      append-icon="mdi-send"
+      @click:append="goToSearchResult"
+      @keyup:enter="goToSearchResult"
       >
       </v-text-field>
       <v-btn icon
@@ -132,6 +137,14 @@ export default {
     data(){
         return{
             searchShow:false,
+            queryString:"",
+        }
+    },
+    methods:{
+        goToSearchResult(){
+            this.$router.push({name:'List', params:{type:"Search",listType:this.queryString}})
+            this.queryString=""
+            this.searchShow=false
         }
     }
 }
