@@ -8,7 +8,7 @@
         </v-col>
         <v-col cols="8" class="detailsPart">
             <div class="titleDown">
-            <h2>{{itemDetails.title}}</h2>
+            <h2>{{itemDetails.title}}{{itemDetails.name}}</h2>
             <div class="d-flex justify-space-around">
                 <p>{{itemDetails.release_date}}({{itemDetails.original_language}})</p>
                 <div class="d-flex">
@@ -96,25 +96,46 @@ export default {
     name:"itemPage",
     data(){
         return{
-            itemId:this.$route.params.movieId,
+            itemId:this.$route.params.itemId,
+            itemType:this.$route.params.type,
             itemDetails:{},
-            actors:{}
+            actors:{},
         }
     },
     components:{
         navbar,
     },
     created(){
+        debugger
+        if(this.itemType=="movie")
+        {
+        debugger
         itemGetter.getMovie(this.itemId)
         .then(response=>{
             this.itemDetails = response.data
+            console.log(response)
         }).catch(e=>console.log(e))
 
-        itemGetter.getActors(this.itemId)
+        itemGetter.getMovieActors(this.itemId)
         .then(response=>{
             this.actors = response.data.cast
             console.log(this.actors)
         }).catch(e=>console.log(e))
+        }
+        else
+        {
+            itemGetter.getSeries(this.itemId)
+        .then(response=>{
+            this.itemDetails = response.data
+            console.log(response)
+        }).catch(e=>console.log(e))
+
+        itemGetter.getSeriesActors(this.itemId)
+        .then(response=>{
+            this.actors = response.data.cast
+            console.log(this.actors)
+        }).catch(e=>console.log(e))
+        }
     },
     computed:{
         

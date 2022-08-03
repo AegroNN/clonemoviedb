@@ -3,11 +3,9 @@
         <v-card>
             <v-card-actions>
                 <v-card-title>
-                Sort
+                Sırala
                 </v-card-title>
-
                 <v-spacer></v-spacer>
-
                 <v-btn
                 icon
                 @click="sortShow = !sortShow"
@@ -55,7 +53,6 @@
                         <v-radio
                         label="Her şey"
                         value="Her şey"
-                        
                         >
                         </v-radio>
                         <v-radio
@@ -250,10 +247,13 @@
                     <v-chip-group
                     active-class="primary--text"
                     column
+                    multiple
                     >
                         <v-chip
                         v-for="genre in genres"
                         :key="genre"
+                        @click="addSelectedGenres(genre)"
+                        @click:close="removeSelectedGenres(genre)"
                         >{{genre}}
                         </v-chip>
                     </v-chip-group>
@@ -303,6 +303,7 @@
                     <v-text-field
                     placeholder="Etikete göre filtrele..."
                     outlined
+                    v-model="keyWord"
                     ></v-text-field>
                     </div>
                 </div>
@@ -313,13 +314,15 @@
         rounded
         color="primary"
         dark
-            >
+        @click="goToWantedResult"
+        >
         Ara
         </v-btn>
     </div>
 </template>
 
 <script>
+
 export default {
     data(){
         return{
@@ -338,11 +341,28 @@ export default {
                 "Aile","Aksiyon","Animasyon","Belgesel","Bilim-kurgu","Dram","Fantastik","Gerilim","Gizem","Komedi","Korku","Macera","Müzik",
                 "Romantik","Savaş","Suç","TV Film","Tarih","Vahşi batı"
             ],
+            selectedGenres:[],
             points:["0","","","","","5","","","","","10"],
             pointsArray:[0,10],
             votes:["0","","100","","200","","300","","400","","500"],
-            time:["0","","60","","120","","180","","240","","300"]
+            time:["0","","60","","120","","180","","240","","300"],
+            keyWord:"",
         }
+    },
+    methods:{
+        goToWantedResult(){
+            this.$router.push({name:'List', params:{listType:this.queryString,}})
+        },
+        addSelectedGenres(value){
+            if(this.selectedGenres.some((genre)=>value===genre)){
+                this.selectedGenres.pop(value)
+            }
+            else
+            {
+                this.selectedGenres.push(value)
+            }
+            console.log(this.selectedGenres)
+        },
     }
 }
 </script>
@@ -366,5 +386,9 @@ export default {
 
 ::v-deep .v-application--is-ltr .v-slider--horizontal .v-slider__tick:last-child .v-slider__tick-label{
     transform: none !important;
+}
+
+::v-deep .v-text-field.v-text-field--enclosed{
+    margin: 15px;
 }
 </style>

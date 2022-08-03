@@ -32,7 +32,14 @@ export default {
     props:["itemData"],
     methods:{
         goToDetails(){
-            this.$router.push({name:'details', params:{movieId:this.itemData.id}})
+            if(this.itemData.name==undefined)
+            {
+            this.$router.push({name:'details', params:{type:"movie",itemId:this.itemData.id}})
+            }
+            else
+            {
+            this.$router.push({name:'details', params:{type:"tv",itemId:this.itemData.id}})
+            }
         }
     }
 }

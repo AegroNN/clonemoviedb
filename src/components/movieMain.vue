@@ -1,6 +1,7 @@
 <template>
     <div class="main">
-        <navbar></navbar>
+        <navbar
+        ></navbar>
         <div class="d-flex justify-center align-center flex-column" style="width:100%">
             <v-card class="welcome"
             tile
@@ -61,9 +62,6 @@ export default {
             }
         }).catch(e=>console.log(e))
      },
-     methods:{
-
-     }
 }
 </script>
 

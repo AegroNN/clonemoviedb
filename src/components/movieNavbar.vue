@@ -4,8 +4,7 @@
       color="blue"
       elevate-on-scroll
       scroll-target="#scrolling-techniques-7"
-      shaped
-
+      flat
     >
     <router-link
         to="/"
@@ -112,7 +111,7 @@
       placeholder="Ara..."
       append-icon="mdi-send"
       @click:append="goToSearchResult"
-      @keyup:enter="goToSearchResult"
+      @keyup.enter="goToSearchResult"
       >
       </v-text-field>
       <v-btn icon
@@ -146,7 +145,7 @@ export default {
             this.queryString=""
             this.searchShow=false
         }
-    }
+     }
 }
 </script>
 
