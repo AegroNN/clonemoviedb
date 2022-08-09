@@ -50,7 +50,11 @@ export default {
         show:false,
         type:this.$route.params.type,
         listType:this.$route.params.listType,
-        mediaType:"person"
+        mediaType:"person",
+        keyWord:this.$route.query.keyWord,
+        genres:this.$route.query.genres,
+        pointArray:[this.$route.query.fromScore,this.$route.query.toScore],
+        sort:this.$route.query.sort
         }
     },
     created(){
@@ -58,10 +62,21 @@ export default {
     },
     watch:{
         "$route"(to){
+            if(to.query.sort==undefined)
+            {
             this.type= to.params.type
             this.listType= to.params.listType
             this.refreshPage()
-        }
+            }
+            else
+            {
+            this.keyWord=to.query.keyWord
+            this.genres=to.query.genres
+            this.pointArray=[to.query.fromScore,to.query.toScore]
+            this.sort=to.query.sort
+            this.showFilteredList()
+            }
+        },
     },
     methods:{
         placeList(){
@@ -77,7 +92,6 @@ export default {
             else{
             listGetter.getList(this.type,this.listType,this.pageNumber)
             .then(response=>{
-            console.log(response)
             let result = response.data.results
             for(let key in result){
                 this.tvList.push({...result[key]})
@@ -92,7 +106,20 @@ export default {
         refreshPage(){
             this.tvList=[]
             this.placeList()
-        }     
+        },
+        showFilteredList(){
+            debugger
+            this.tvList=[]
+            debugger
+            listGetter.getFilteredList(this.type,this.sort,this.genres,this.keyWord,this.pageNumber,this.pointArray[0],this.pointArray[1])
+            .then(response=>{
+            console.log(response)
+            let result = response.data.results
+            for(let key in result){
+                this.tvList.push({...result[key]})
+            }
+            debugger
+            }).catch(e=>console.log(e))},     
         }
 }
 </script>

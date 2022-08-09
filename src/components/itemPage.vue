@@ -106,10 +106,8 @@ export default {
         navbar,
     },
     created(){
-        debugger
         if(this.itemType=="movie")
         {
-        debugger
         itemGetter.getMovie(this.itemId)
         .then(response=>{
             this.itemDetails = response.data

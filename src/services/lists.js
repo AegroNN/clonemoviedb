@@ -23,7 +23,33 @@ export default{
     getSearchResult(queryString,pageNumber){
         return api.get("/search/multi?api_key=196ce0b01013c413b6103f24b696e9c3&language=en-US&query="+queryString+"&page="+pageNumber+"&include_adult=false")
     },
-    getFilteredList(type,sortBy,releaseDateFirst,releaseDateLast,voteAverageFirst,voteAverageLast,genres,keyWord,pageNumber){
-            return api.get("/discover/"+type+"?api_key=196ce0b01013c413b6103f24b696e9c3&language=en-US&sort_by="+sortBy+"&include_adult=false&include_video=false&page="+pageNumber+"&primary_release_date.gte="+releaseDateFirst+"&primary_release_date.lte="+releaseDateLast+"&vote_average.gte="+voteAverageFirst+"&vote_average.lte="+voteAverageLast+"&with_genres="+genres+"&with_keywords="+keyWord+"&with_watch_monetization_types=flatrate")
+    getFilteredList(type,sortBy,genres,keyWord,pageNumber,fromScore,toScore){
+        let sort=""
+        if(sortBy==="Azalan popülerlik")
+        {
+            sort="popularity.asc"
+        }
+        else if(sortBy==="Artan popülerlik")
+        {
+            sort="popularity.desc"
+        }
+        else if(sortBy==="Artan oy")
+        {
+            sort="vote_average.asc"
+        }
+        else if(sortBy==="Azalan oy")
+        {
+            sort="vote_average.desc"
+        }
+        else if(sortBy==="Artan çıkış tarihi")
+        {
+            sort="relaese_date.asc"
+        }
+        else if(sortBy==="Azalan çıkış tarihi")
+        {
+            sort="relaese_date.desc"
+        }
+        
+        return api.get("/discover/"+type+"?api_key=196ce0b01013c413b6103f24b696e9c3&language=en-US&sort_by="+sort+"&include_adult=false&include_video=false&page="+pageNumber+"&vote_average.gte="+fromScore+"&vote_average.lte="+toScore+"&with_keywords="+keyWord+"&with_watch_monetization_types=flatrate&with_genres="+genres[0])
     }
 }

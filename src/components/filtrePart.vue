@@ -20,9 +20,8 @@
                     <v-select
                     style="width:80%"
                     :items="sorts"
-                    :item-text="sorts[0]"
-                    :value="sorts[0]"
                     outlined
+                    v-model="sortType"
                     ></v-select>
                     </div>
                 </div>
@@ -75,6 +74,7 @@
                         value
                         @click="kullanShow=!kullanShow"
                         label="İlk yayın tarihi arasın mı?"
+                        disabled
                         ></v-checkbox>
                         <v-checkbox
                         v-show="kullanShow"
@@ -115,6 +115,7 @@
                         value
                         @click="tarihShow=!tarihShow"
                         label="İlk yayın tarihi arasın mı?"
+                        disabled
                         ></v-checkbox>
                         <v-checkbox
                         v-show="tarihShow"
@@ -265,7 +266,7 @@
                     color="primary"
                     ticks="always"
                     tick-size="3"
-                    :value="pointsArray"
+                    v-model="scoreArray"
                     min="0"
                     max="10"
                     :tick-labels="points"
@@ -282,6 +283,7 @@
                     max="10"
                     :tick-labels="votes"
                     thumb-label
+                    disabled
                     ></v-slider>
                     </div>
                     <div style="width:80%">
@@ -295,6 +297,7 @@
                     max="10"
                     :value="pointsArray"
                     :tick-labels="time"
+                    disabled
                     ></v-range-slider>
                     </div>
                     <div style="width:80%">
@@ -326,6 +329,8 @@
 export default {
     data(){
         return{
+            listType:this.$route.params.listType,
+            type:this.$route.params.type,
             sortShow:false,
             filtreShow:false,
             kullanShow:false,
@@ -347,11 +352,13 @@ export default {
             votes:["0","","100","","200","","300","","400","","500"],
             time:["0","","60","","120","","180","","240","","300"],
             keyWord:"",
+            sortType:"Azalan popülerlik",
+            scoreArray:[0,10],
         }
     },
     methods:{
         goToWantedResult(){
-            this.$router.push({name:'List', params:{listType:this.queryString,}})
+            this.$router.push({name:'List', params:{type:this.type ,listType:this.listType}, query:{genres:this.selectedGenres, keyWord:this.keyWord, fromScore:this.scoreArray[0],toScore:this.scoreArray[1], sort:this.sortType}})
         },
         addSelectedGenres(value){
             if(this.selectedGenres.some((genre)=>value===genre)){
@@ -363,6 +370,12 @@ export default {
             }
             console.log(this.selectedGenres)
         },
+    },
+    watch:{
+        "$route"(to){
+            this.type= to.params.type
+            this.listType= to.params.listType
+        }
     }
 }
 </script>
